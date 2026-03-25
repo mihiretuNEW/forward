@@ -158,6 +158,14 @@ export default function App() {
     });
   };
 
+  const toggleTradeTick = (id: string) => {
+    setAllTrades(prev => {
+      const currentDayTrades = [...trades];
+      const updatedTrades = currentDayTrades.map(t => t.id === id ? { ...t, ticked: !t.ticked } : t);
+      return { ...prev, [dateKey]: updatedTrades };
+    });
+  };
+
   const stats = useMemo(() => {
     const wins = trades.filter(t => t.result === 'win').length;
     const losses = trades.filter(t => t.result === 'loss').length;
@@ -320,12 +328,26 @@ export default function App() {
                     </thead>
                     <tbody className="divide-y divide-border">
                       {trades.map((trade) => (
-                        <tr key={trade.id} className="hover:bg-white/[0.02] transition-colors">
-                          <td className="px-6 py-4 font-mono font-bold text-muted-foreground">{trade.id}</td>
+                        <tr 
+                          key={trade.id} 
+                          onDoubleClick={() => toggleTradeTick(trade.id)}
+                          className={cn(
+                            "hover:bg-white/[0.02] transition-colors cursor-pointer select-none",
+                            trade.ticked && "opacity-60 grayscale-[0.5]"
+                          )}
+                        >
+                          <td className="px-6 py-4 font-mono font-bold text-muted-foreground flex items-center gap-2">
+                            {trade.id}
+                            {trade.ticked && (
+                              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                                <CheckCircle2 className="w-4 h-4 text-win" />
+                              </motion.div>
+                            )}
+                          </td>
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-2">
                               <button 
-                                onClick={() => updateTrade(trade.id, 'result', 'win')}
+                                onClick={() => updateTrade(trade.id, 'result', trade.result === 'win' ? null : 'win')}
                                 className={cn(
                                   "p-2 rounded-lg transition-all border",
                                   trade.result === 'win' 
@@ -336,7 +358,7 @@ export default function App() {
                                 <CheckCircle2 className="w-5 h-5" />
                               </button>
                               <button 
-                                onClick={() => updateTrade(trade.id, 'result', 'loss')}
+                                onClick={() => updateTrade(trade.id, 'result', trade.result === 'loss' ? null : 'loss')}
                                 className={cn(
                                   "p-2 rounded-lg transition-all border",
                                   trade.result === 'loss' 
