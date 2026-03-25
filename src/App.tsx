@@ -442,18 +442,18 @@ export default function App() {
 
               {/* Calendar Grid */}
               <div className="space-y-4">
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-7 gap-1 md:gap-2">
                   {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(day => (
-                    <div key={day} className="text-center text-[10px] font-bold text-muted-foreground tracking-widest py-2">
+                    <div key={day} className="text-center text-[8px] md:text-[10px] font-bold text-muted-foreground tracking-widest py-2">
                       {day}
                     </div>
                   ))}
                 </div>
 
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-7 gap-1 md:gap-2">
                   {/* Padding for start of month */}
                   {Array.from({ length: getStartWeekday(etDate.month, etDate.year) }).map((_, i) => (
-                    <div key={`pad-${i}`} className="h-24 md:h-32 bg-card/20 rounded-xl border border-border/30"></div>
+                    <div key={`pad-${i}`} className="h-16 md:h-32 bg-card/20 rounded-lg md:rounded-xl border border-border/30"></div>
                   ))}
 
                   {/* Days of the month */}
@@ -470,18 +470,18 @@ export default function App() {
                       <div 
                         key={key}
                         className={cn(
-                          "relative group flex flex-col p-3 rounded-xl border transition-all h-24 md:h-32",
+                          "relative group flex flex-col p-1 md:p-3 rounded-lg md:rounded-xl border transition-all h-16 md:h-32",
                           isPositive ? "bg-win/5 border-win/20" : 
                           isNegative ? "bg-loss/5 border-loss/20" : 
                           "bg-card border-border",
-                          isToday && "ring-2 ring-win ring-offset-2 ring-offset-background z-10"
+                          isToday && "ring-2 ring-win ring-offset-1 md:ring-offset-2 ring-offset-background z-10"
                         )}
                       >
-                        <span className="text-xs font-bold text-muted-foreground mb-2">{day}</span>
+                        <span className="text-[10px] md:text-xs font-bold text-muted-foreground mb-1 md:mb-2">{day}</span>
                         
-                        <div className="flex-1 flex flex-col justify-center">
-                          <div className="flex items-center text-sm md:text-base font-bold">
-                            {value !== undefined && <span className="mr-0.5 text-muted-foreground">$</span>}
+                        <div className="flex-1 flex flex-col justify-center overflow-hidden">
+                          <div className="flex items-center justify-center text-[10px] md:text-base font-bold">
+                            {value !== undefined && <span className="mr-0.5 text-muted-foreground text-[8px] md:text-xs">$</span>}
                             <input 
                               type="text"
                               value={calendarData[key] === undefined ? '' : calendarData[key]}
@@ -502,7 +502,7 @@ export default function App() {
                                 }
                               }}
                               className={cn(
-                                "w-full bg-transparent focus:outline-none",
+                                "w-full bg-transparent focus:outline-none text-center",
                                 isPositive ? "text-win" : isNegative ? "text-loss" : "text-white"
                               )}
                               placeholder="0"
