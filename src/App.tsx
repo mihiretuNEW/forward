@@ -12,7 +12,8 @@ import {
   ChevronRight,
   User,
   Lock,
-  DollarSign
+  DollarSign,
+  AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from './lib/utils';
@@ -299,6 +300,45 @@ export default function App() {
                 <StatCard title="Total Losses" value={stats.losses} icon={XCircle} colorClass="text-loss" />
                 <StatCard title="Win Rate" value={`${stats.winRate}%`} icon={TrendingUp} colorClass="text-blue-400" />
               </div>
+
+              {/* Stop Trading Warning */}
+              {stats.losses >= 3 && (
+                <motion.div 
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="bg-loss/20 border-2 border-loss rounded-2xl p-6 md:p-8 flex flex-col items-center text-center space-y-4 relative overflow-hidden"
+                >
+                  <motion.div 
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    className="bg-loss p-4 rounded-full"
+                  >
+                    <AlertTriangle className="w-10 h-10 md:w-14 md:h-14 text-white" />
+                  </motion.div>
+                  
+                  <div className="space-y-2">
+                    <h3 className="text-2xl md:text-4xl font-black text-loss uppercase tracking-tighter">
+                      STOP TRADING NOW!
+                    </h3>
+                    <p className="text-lg md:text-xl font-bold text-white">
+                      You have reached 3 losses today.
+                    </p>
+                  </div>
+
+                  <div className="max-w-md bg-loss/10 p-4 rounded-xl border border-loss/30">
+                    <p className="text-sm md:text-base italic text-muted-foreground leading-relaxed">
+                      "A professional trader is not defined by their wins, but by their discipline to walk away. 
+                      Protect your capital, protect your mind. The market will be here tomorrow, but your edge 
+                      disappears when you trade with emotions. Rest, recover, and come back stronger."
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-loss font-bold text-sm uppercase tracking-widest">
+                    <div className="w-2 h-2 rounded-full bg-loss animate-pulse" />
+                    Trading Locked for Today
+                  </div>
+                </motion.div>
+              )}
 
               {/* Trade Entry Table */}
               <div className="bg-card border border-border rounded-xl overflow-hidden">
