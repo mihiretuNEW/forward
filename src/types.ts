@@ -8,25 +8,6 @@ export const ETHIOPIAN_MONTHS_AM = [
   "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጳጉሜ"
 ];
 
-export interface Trade {
-  id: string;
-  result: 'win' | 'loss' | null;
-  reason: string;
-}
-
-export interface DailyJournal {
-  trades: Trade[];
-}
-
-export interface CalendarEntry {
-  value: number | null;
-}
-
-export interface UserSession {
-  email: string;
-  isAuthenticated: boolean;
-}
-
 export interface EthiopianDate {
   day: number;
   month: number; // 0-indexed

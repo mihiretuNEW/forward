@@ -1,5 +1,12 @@
 {
-  "name": "Mihiretu Journal",
+  "name": "mirejourney",
   "description": "A professional dark-themed trading journal featuring daily trade tracking and an Ethiopian calendar profit/loss log.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
