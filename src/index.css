@@ -1,39 +1,71 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #030303;
-  --color-card: #0a0a0a;
-  --color-border: #1f1f1f;
+  --color-background: #000000;
+  --color-card: #08080a;
+  --color-card-elevated: #0f0f13;
+  --color-border: #1c1c22;
+  --color-border-subtle: #141418;
   --color-win: #00E676;
-  --color-loss: #FF3D00;
+  --color-win-glow: rgba(0, 230, 118, 0.15);
+  --color-loss: #FF3838;
+  --color-loss-glow: rgba(255, 56, 56, 0.15);
 }
 
-body {
-  background-color: var(--color-background);
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background-color: #000000;
   color: #ffffff;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  min-height: 100dvh;
 }
 
-/* Force dark placeholder */
+/* Safe area support for mobile devices */
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top), 0.75rem);
+}
+
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+}
+
+.px-safe {
+  padding-left: max(env(safe-area-inset-left), 0.75rem);
+  padding-right: max(env(safe-area-inset-right), 0.75rem);
+}
+
+/* Force dark input and placeholder */
 input::placeholder {
-  color: #333333;
+  color: #404048;
 }
 
-/* Custom Scrollbar */
+/* Premium Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #030303;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f1f1f;
+  background: #202026;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333333;
+  background: #33333d;
+}
+
+/* Mobile tap button optimization */
+button, input, a {
+  touch-action: manipulation;
 }

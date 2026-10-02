@@ -13,3 +13,10 @@ export interface EthiopianDate {
   month: number; // 0-indexed
   year: number;
 }
+
+export interface PlanDayData {
+  startBalance?: string;
+  dailyResult?: string;
+  rulesFollowed?: 'yes' | 'no' | null;
+  emotionalState?: string;
+}
