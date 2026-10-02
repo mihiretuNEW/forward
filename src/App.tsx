@@ -5,8 +5,6 @@ import {
   ChevronRight, 
   MoreVertical, 
   Compass, 
-  Calendar as CalendarIcon, 
-  Target, 
   TrendingUp, 
   TrendingDown, 
   ShieldCheck, 
@@ -19,7 +17,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { cn } from './lib/utils';
 import { ETHIOPIAN_MONTHS_AM, PlanDayData } from './types';
 import { getEthiopianDaysInMonth, formatCurrency, toEthiopianDate, getStartWeekday } from './utils/ethiopianCalendar';
-import { PWAInstallButton } from './components/PWAInstallModal';
+import { PWAInstallMenuItem } from './components/PWAInstallModal';
 import { OfflineBanner } from './components/OfflineBanner';
 
 // --- Stat Block Component with OLED Black & Neon Glow ---
@@ -283,39 +281,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Center Tabs (Desktop / Tablet) */}
-          <div className="hidden md:flex items-center p-1 rounded-xl bg-[#0d0d11] border border-white/10">
-            <button
-              onClick={() => setCurrentView('calendar')}
-              className={cn(
-                "flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all",
-                currentView === 'calendar'
-                  ? "bg-white/15 text-white shadow-sm"
-                  : "text-[#888] hover:text-white"
-              )}
-            >
-              <CalendarIcon className="w-3.5 h-3.5" />
-              Calendar Journal
-            </button>
-            <button
-              onClick={() => setCurrentView('plan')}
-              className={cn(
-                "flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all",
-                currentView === 'plan'
-                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-sm"
-                  : "text-[#888] hover:text-white"
-              )}
-            >
-              <Target className="w-3.5 h-3.5" />
-              Daily Engine (TP/SL)
-            </button>
-          </div>
-
-          {/* Right Header Actions: PWA Install + Monthly History */}
+          {/* Right Header Actions: Monthly History */}
           <div className="flex items-center gap-2">
-            {/* Direct PWA Install Button */}
-            <PWAInstallButton compact={true} />
-
             {/* Monthly History Menu */}
             <div className="relative" ref={menuRef}>
               <button 
@@ -347,6 +314,8 @@ export default function App() {
                         <X className="w-4 h-4" />
                       </button>
                     </div>
+
+                    <PWAInstallMenuItem />
                     
                     <div className="divide-y divide-white/5">
                       {monthlyStats.length === 0 ? (
@@ -393,35 +362,6 @@ export default function App() {
 
       {/* Main Workspace */}
       <main className="flex-1 w-full max-w-[1400px] mx-auto px-3 sm:px-6 py-3 sm:py-6 space-y-4 sm:space-y-6">
-        
-        {/* View Segmented Switch for Mobile */}
-        <div className="md:hidden grid grid-cols-2 p-1 rounded-2xl bg-[#09090c] border border-white/10 gap-1">
-          <button
-            onClick={() => setCurrentView('calendar')}
-            className={cn(
-              "flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all touch-manipulation",
-              currentView === 'calendar'
-                ? "bg-white/15 text-white shadow-md"
-                : "text-[#777] hover:text-white"
-            )}
-          >
-            <CalendarIcon className="w-3.5 h-3.5" />
-            <span>Calendar</span>
-          </button>
-          <button
-            onClick={() => setCurrentView('plan')}
-            className={cn(
-              "flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold transition-all touch-manipulation",
-              currentView === 'plan'
-                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-md"
-                : "text-[#777] hover:text-white"
-            )}
-          >
-            <Target className="w-3.5 h-3.5" />
-            <span>Daily Engine</span>
-          </button>
-        </div>
-
         {currentView === 'calendar' ? (
           <>
             {/* Global Stats Grid (OLED Black Cards) */}
@@ -590,12 +530,6 @@ export default function App() {
                   );
                 })}
               </div>
-
-              {/* Calendar Footer Tip */}
-              <div className="px-3 sm:px-6 py-2.5 bg-[#0a0a0d] border-t border-white/5 flex items-center justify-between text-[10px] text-[#666] font-mono">
-                <span>Double-tap any day to tick as complete</span>
-                <span className="hidden sm:inline">All data saves automatically to local storage</span>
-              </div>
             </div>
           </>
         ) : (
@@ -613,9 +547,6 @@ export default function App() {
               </button>
 
               <div className="text-center">
-                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#777] block">
-                  Daily Plan Engine
-                </span>
                 <button 
                   onClick={resetToToday}
                   className="text-xs sm:text-sm font-mono font-bold text-white hover:text-emerald-400 transition-colors"
